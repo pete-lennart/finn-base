@@ -27,18 +27,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 FROM mcr.microsoft.com/azureml/onnxruntime:v1.4.0
-
 LABEL maintainer="Yaman Umuroglu <yamanu@xilinx.com>"
-
-ARG GROUP
-ARG GID
-ARG USER
-ARG UID
-
 ENV SHELL=/bin/bash
-
-# Run below commands as root
-USER root
 
 RUN apt-get update
 RUN apt-get install -y git build-essential verilator python3-dev
@@ -56,14 +46,8 @@ RUN chmod +x entrypoint.sh run_tests.sh build_docs.sh
 # This creates /workspace if it doesn't exist
 WORKDIR /workspace
 
-# Add user
-RUN groupadd -o -g ${GID} ${GROUP} && \
-    useradd -u ${UID} -g ${GROUP} -ms /bin/bash ${USER} && \
-    usermod -aG sudo ${USER} && \
-    chown -R ${USER}:${GROUP} /workspace
-
 # Color prompt
-RUN echo "PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] '" >> /home/${USER}/.bashrc
+RUN echo "PS1='\[\033[1;36m\]\u\[\033[1;31m\]@\[\033[1;32m\]\h:\[\033[1;35m\]\w\[\033[1;31m\]\$\[\033[0m\] '" >> /root/.bashrc
 
 # Install Python package requirements
 COPY docker/requirements.txt .
@@ -83,7 +67,7 @@ USER ${USER}
 
 # Set ENV
 ENV PYTHONPATH "${PYTHONPATH}:/workspace/finn-base/src"
-ENV PATH "${PATH}:/home/${USER}/.local/bin"
+ENV PATH "${PATH}:/root/.local/bin"
 
 # Set workdir to gray before launching container
 WORKDIR /workspace/finn-base
