@@ -18,5 +18,4 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         image-name: xilinx/finn-base
         dockerfile: docker/Dockerfile
-        custom-args: --build-arg USER=root --build-arg GROUP=root --build-arg UID=0 --build-arg GID=0
 
