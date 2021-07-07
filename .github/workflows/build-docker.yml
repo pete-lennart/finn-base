@@ -16,6 +16,6 @@ jobs:
       uses: VaultVulp/gp-docker-action@1.1.8
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        image-name: xilinx/finn-base
+        image-name: ci
         dockerfile: docker/Dockerfile
 
