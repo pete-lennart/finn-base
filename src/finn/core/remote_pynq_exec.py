@@ -32,7 +32,7 @@ import subprocess
 import warnings
 
 
-def remote_exec(model, execution_context):
+def remote_pynq_exec(model, execution_context):
     """Executes the given model remotely on the pynq board. The metadata properties
     related to the pynq board have to be set. The execution context contains the
     input values."""
